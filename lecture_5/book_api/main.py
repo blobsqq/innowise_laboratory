@@ -36,14 +36,14 @@ def get_db():
 #
 class Book(BaseModel):
     """
-       Pydantic model representing a book in the collection
+    Pydantic model representing a book in the collection
 
-       Attr:
-           id (int): Unique identifier for the book
-           title (str): The title of the book. Must be at least 1 character long
-           author (str): The author's name. Must be 1–100 characters long
-           year (int | None): The publication year of the book. Optional
-       """
+    attr:
+       id (int): unique identifier for the book
+       title (str): title of the book. Must be at least 1 character long
+       author (str): author's name. Must be 1–100 characters long
+       year (int | None): publication year of the book, optional
+    """
     id: int
     title: str = Field(min_length=1)
     author: str = Field(min_length=1, max_length=100)
@@ -61,7 +61,7 @@ def add_new_book(book: Book, db: Session = Depends(get_db)):
     Add a new book to the Books list
 
     args:
-        book (Book): Data to add
+        book (Book): data to add
     return:
         Book: new book object
     """
@@ -102,11 +102,11 @@ def delete_book(book_id: int, db: Session = Depends(get_db)):
     Deletes a book from the BOOKS list by its ID
 
     args:
-        book_id (int): Id of the book to delete
+        book_id (int): ID of the book to delete
     return:
-        str: Confirmation message with Id of deleted book
+        str: confirmation message with ID of deleted book
     raises:
-        HTTPException: If the book with entered id is not found
+        HTTPException: if the book with entered id is not found
     """
     book_model = db.query(models.Books).filter(models.Books.id == book_id).first()
 
@@ -121,18 +121,19 @@ def delete_book(book_id: int, db: Session = Depends(get_db)):
 
     return {'message': f'Book with id: {book_id} was deleted'}
 
+
 # PUT method (Update)
 @app.put("/books/{book_id}", response_model=Book)
 def update_book(book_id: int, book: Book, db: Session = Depends(get_db)):
     """Updates details of an existing book
 
     args:
-        book_id (int): id of the book to update
+        book_id (int): ID of the book to update
         book (Book): new book data that should replace existing entry
     return:
         Book: updated book object
     raise:
-        HTTPException: If the book with entered id is not found
+        HTTPException: if the book with entered ID is not found
     """
     book_model = db.query(models.Books).filter(models.Books.id == book_id).first()
 
@@ -149,6 +150,7 @@ def update_book(book_id: int, book: Book, db: Session = Depends(get_db)):
     db.refresh(book_model)
 
     return book_model
+
 
 # GET method (Search)
 @app.get("/books/search/", response_model=list[Book])
