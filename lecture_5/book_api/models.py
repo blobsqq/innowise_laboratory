@@ -9,7 +9,7 @@ Each book should have:
     year: int (optional)
 """
 from sqlalchemy import Column, Integer, String
-from database import Base
+from book_api.database import Base
 
 
 class Books(Base):

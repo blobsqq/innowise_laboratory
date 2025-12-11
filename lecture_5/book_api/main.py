@@ -9,8 +9,10 @@ Add, view and delete books stored in a relational database
 #
 from fastapi import FastAPI, HTTPException, Depends
 from pydantic import BaseModel, Field
-import models
-from database import engine, SessionLocal
+
+from book_api import models
+from book_api.database import engine, SessionLocal
+
 from sqlalchemy.orm import Session
 
 # FastApi instance
